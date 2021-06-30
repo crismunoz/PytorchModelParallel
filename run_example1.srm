@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --nodes=16          #Numero de Nósi
+#SBATCH --ntasks-per-node=4 #Numero de tarefas por Nó
+#SBATCH --ntasks=64          #Numero de tarefas
+#SBATCH -p ict_gpu          #Fila (partition) a ser utilizada
+#SBATCH -J GF_JN            #Nome job
+#SBATCH --time=6-12    #Altera o tempo limite para 5 minutos
+#SBATCH --account=bigoilict
+#SBATCH --exclusive                    #Utilização
+
+JOBNAME=$SLURM_JOB_NAME            # re-use the job-name specified above
+NODES=$(scontrol show hostname $SLURM_JOB_NODELIST)
+JOINED_NODES=${NODES[@]}
+
+WORKDIR=$(pwd)
+SIF_DOCKER_NAME="/scratch/parceirosbr/cristian.villalobos/docker/detectron-model_latest.sif"
+
+singularity run --nv \
+-B /scratch/parceirosbr/cristian.villalobos \
+-B /scratch/parceirosbr/bigoilict \
+${SIF_DOCKER_NAME} /bin/bash -c "${WORKDIR} ; python example1.py"
