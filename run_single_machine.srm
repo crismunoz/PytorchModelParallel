@@ -18,4 +18,4 @@ SIF_DOCKER_NAME="/scratch/parceirosbr/cristian.villalobos/docker/detectron-model
 singularity run --nv \
 -B /scratch/parceirosbr/cristian.villalobos \
 -B /scratch/parceirosbr/bigoilict \
-${SIF_DOCKER_NAME} /bin/bash -c "${WORKDIR} ; python example1.py"
+${SIF_DOCKER_NAME} /bin/bash -c "cd ${WORKDIR} ; python example1.py"
